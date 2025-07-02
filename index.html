@@ -2,29 +2,48 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Telegram Web App</title>
+  <title>Telegram Shop</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; color: #333; }
-    button { padding: 10px 20px; font-size: 16px; background: #0088cc; border: none; color: white; cursor: pointer; border-radius: 5px; }
-    button:hover { background: #006699; }
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    .product { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin-bottom: 20px; background: #fff; }
+    .product img { max-width: 100%; border-radius: 8px; }
+    .product h3 { margin: 10px 0 5px; }
+    .product p { margin: 5px 0; }
+    .product button { padding: 10px 20px; background: #0088cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    .product button:hover { background: #006699; }
   </style>
 </head>
 <body>
-  <h1>Привет из Telegram Web App</h1>
-  <p>Это простой пример базового приложения.</p>
-  <button id="sendDataBtn">Отправить данные в бота</button>
+  <h2>Каталог товаров</h2>
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300x200?text=Товар+1" alt="Товар 1">
+    <h3>Кроссовки Puma</h3>
+    <p>Цена: 8500 ₽</p>
+    <button onclick="buy('Кроссовки Puma', 8500)">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://via.placeholder.com/300x200?text=Товар+2" alt="Товар 2">
+    <h3>Футболка Nike</h3>
+    <p>Цена: 3500 ₽</p>
+    <button onclick="buy('Футболка Nike', 3500)">Купить</button>
+  </div>
 
   <script>
-    if (window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp;
+    const tg = window.Telegram?.WebApp;
 
-      document.getElementById('sendDataBtn').onclick = () => {
-        tg.sendData('Привет, бот! Это данные из Web App');
-      };
-    } else {
-      document.getElementById('sendDataBtn').disabled = true;
-      document.body.insertAdjacentHTML('beforeend', '<p>Telegram WebApp API не доступен.</p>');
+    function buy(name, price) {
+      if (tg) {
+        const order = {
+          product: name,
+          price: price,
+          date: new Date().toLocaleString()
+        };
+        tg.sendData(JSON.stringify(order));
+      } else {
+        alert("Telegram WebApp API недоступен.");
+      }
     }
   </script>
 </body>
