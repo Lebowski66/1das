@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telegram Web App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; color: #333; }
+    button { padding: 10px 20px; font-size: 16px; background: #0088cc; border: none; color: white; cursor: pointer; border-radius: 5px; }
+    button:hover { background: #006699; }
+  </style>
+</head>
+<body>
+  <h1>Привет из Telegram Web App</h1>
+  <p>Это простой пример базового приложения.</p>
+  <button id="sendDataBtn">Отправить данные в бота</button>
+
+  <script>
+    if (window.Telegram?.WebApp) {
+      const tg = window.Telegram.WebApp;
+
+      document.getElementById('sendDataBtn').onclick = () => {
+        tg.sendData('Привет, бот! Это данные из Web App');
+      };
+    } else {
+      document.getElementById('sendDataBtn').disabled = true;
+      document.body.insertAdjacentHTML('beforeend', '<p>Telegram WebApp API не доступен.</p>');
+    }
+  </script>
+</body>
+</html>
